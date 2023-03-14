@@ -57,9 +57,31 @@ module.exports = {
       });
   },
 
-  deleteThought() {},
+  deleteThought(req, res) {
+    Thought.findByIdAndDelete({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with that ID!' })
+          : User.findByIdAndUpdate(
+              { thoughts: req.params.thoughId },
+              { $pull: { thoughts: req.params.thoughId } },
+              { new: true }
+            )
+      )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'Thought created but no user with this ID!' })
+          : res.json({ message: 'Thought successfully deleted!' })
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
 
-  addReaction() {},
+  addReaction(req, res) {},
 
-  deleteReaction() {},
+  deleteReaction(req, res) {},
 };
