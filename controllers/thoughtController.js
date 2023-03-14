@@ -40,7 +40,22 @@ module.exports = {
       });
   },
 
-  updateThought() {},
+  updateThought(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with that ID!' })
+          : res.json(thought)
+      )
+      .catch((err) => {
+        console.log(err);
+        rest.status(500).json(err);
+      });
+  },
 
   deleteThought() {},
 
