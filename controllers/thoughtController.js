@@ -19,7 +19,25 @@ module.exports = {
   },
 
   createThought(req, res) {
-    Thought.create(req.body).then((dbThoughtData) => res.json(dbThoughtData));
+    Thought.create(req.body)
+      .then((thought) => {
+        return User.findOneAndUpdate(
+          { _id: req.params.userId },
+          { $addToSet: { thoughts: thought.id } },
+          { new: true }
+        );
+      })
+      .then((thought) =>
+        !thought
+          ? res.status(400).json({
+              message: 'No thought with this ID!',
+            })
+          : res.json(thought)
+      )
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
   },
 
   updateThought() {},
