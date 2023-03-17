@@ -10,16 +10,15 @@ module.exports = {
 
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select('-__v')
-      .populate('thoughts')
-      .populate('friends')
+    .select('-__v').populate('friends').populate('thoughts')
       .then((userData) =>
         !userData
-          ? res.status(404).json({ message: 'No use with that ID' })
+          ? res.status(404).json({ message: 'No user with that ID' })
           : res.json(userData)
       )
       .catch((err) => res.status(500).json(err));
   },
+    
 
   createUser(req, res) {
     User.create(req.body)
