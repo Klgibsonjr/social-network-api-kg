@@ -10,8 +10,7 @@ module.exports = {
 
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-    .select('-__v').populate('friends').populate('thoughts')
-      .then((userData) =>
+    .select('-__v').then((userData) =>
         !userData
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json(userData)
@@ -45,8 +44,10 @@ module.exports = {
       .then((userData) =>
         !userData
           ? res.status(400).json({ message: 'No user with that ID' })
-          : res.json(userData)
-      )
+          : {}
+      ).then(() => {
+        res.json({message: 'User has been successfully deleted!'})
+      })
       .catch((err) => res.status(500).json(err));
   },
 
