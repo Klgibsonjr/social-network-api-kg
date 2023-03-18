@@ -3,21 +3,24 @@ const { User, Thought } = require('../models');
 module.exports = {
   getUsers(req, res) {
     User.find()
-    .select('-__v')
+      .select('-__v')
       .then((userData) => res.json(userData))
       .catch((err) => res.status(500).json(err));
   },
 
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-    .select('-__v').then((userData) =>
+      .select('-__v')
+      .populate('thoughts')
+      .then((userData) =>
         !userData
-          ? res.status(404).json({ message: 'No user with that ID' })
+          ? res.status(404).json({ message: 'No user with that ID!' })
           : res.json(userData)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+        res.status(500).json(err);
+      });
   },
-    
 
   createUser(req, res) {
     User.create(req.body)
@@ -45,8 +48,9 @@ module.exports = {
         !userData
           ? res.status(400).json({ message: 'No user with that ID' })
           : {}
-      ).then(() => {
-        res.json({message: 'User has been successfully deleted!'})
+      )
+      .then(() => {
+        res.json({ message: 'User has been successfully deleted!' });
       })
       .catch((err) => res.status(500).json(err));
   },
