@@ -50,7 +50,7 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 Below is a link to a walkthrough video showing the API functioning as intended.
 
-[Social Network API]()
+[Social Network API](https://drive.google.com/file/d/1yMDYy69MhgrAw106oxQnFU-n2Z5M-HJE/view)
 
 ---
 

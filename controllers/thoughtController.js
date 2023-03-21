@@ -65,14 +65,13 @@ module.exports = {
               { new: true }
             )
       )
-      .then((userData) => {
-        console.log(userData);
+      .then((userData) =>
         !userData
           ? res.status(404).json({
               message: 'Thought has been deleted, but no user with this ID!',
             })
-          : res.json({ message: 'Thought successfully deleted!' });
-      })
+          : res.json({ message: 'Thought successfully deleted!' })
+      )
       .catch((err) => res.status(500).json(err));
   },
 
