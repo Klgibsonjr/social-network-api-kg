@@ -1,7 +1,7 @@
 const { Thought, User } = require('../models');
 
 module.exports = {
-  getThought(req, res) {
+  getThoughts(req, res) {
     Thought.find()
       .then((thoughtData) => res.json(thoughtData))
       .catch((err) => res.status(500).json(err));
@@ -98,11 +98,12 @@ module.exports = {
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
-      .then((thoughtData) =>
+      .then((thoughtData) => {
+        console.log(thoughtData);
         !thoughtData
           ? res.status(404).json({ message: 'No thought with that ID!' })
-          : res.status(thoughtData)
-      )
+          : res.json(thoughtData);
+      })
       .catch((err) => res.status(500).json(err));
   },
 };

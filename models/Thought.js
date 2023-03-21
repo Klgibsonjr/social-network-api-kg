@@ -10,7 +10,7 @@ const reactionSchema = new Schema(
     reactionBody: {
       type: String,
       required: true,
-      max: 280,
+      maxlength: 280,
     },
     username: {
       type: String,
@@ -20,13 +20,12 @@ const reactionSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (createdAt) => {
-        if (createdAt) return dayjs(createdAt).format('MM/DD/YYY [@] h:m a');
+        if (createdAt) return dayjs(createdAt).format('MM/DD/YYYY [@] h:m a');
       },
     },
   },
   {
     toJSON: {
-      virtuals: true,
       getters: true,
     },
     id: false,
@@ -55,7 +54,6 @@ const thoughtSchema = new Schema(
   },
   {
     toJSON: {
-      virtuals: true,
       getters: true,
     },
     id: false,
