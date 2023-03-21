@@ -23,7 +23,7 @@ module.exports = {
       .then((thoughtData) => {
         return User.findOneAndUpdate(
           { _id: req.body.userId },
-          { $push: { thoughts: thoughtData.id } },
+          { $push: { thoughts: thoughtData._id } },
           { new: true }
         );
       })
@@ -65,13 +65,14 @@ module.exports = {
               { new: true }
             )
       )
-      .then((userData) =>
+      .then((userData) => {
+        console.log(userData);
         !userData
           ? res.status(404).json({
               message: 'Thought has been deleted, but no user with this ID!',
             })
-          : res.json({ message: 'Thought successfully deleted!' })
-      )
+          : res.json({ message: 'Thought successfully deleted!' });
+      })
       .catch((err) => res.status(500).json(err));
   },
 
