@@ -17,6 +17,7 @@
 - [License](#license)
 - [User Story](#user-story)
 - [Acceptance Criteria](#acceptance-criteria)
+- [Installation](#installation)
 - [Demonstration](#demostration)
 - [Contact](#contact)
 
@@ -45,6 +46,16 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 ```
 
 ---
+
+## Installation
+
+Use command
+
+```zsh
+npm run start
+```
+
+to initiate the API and connect to the server.
 
 ## Demonstrations
 
